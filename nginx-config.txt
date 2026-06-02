@@ -1,0 +1,39 @@
+server {
+    server_name api.yukki.dev;
+
+    location /api/yukki/ {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Handle CORS preflight at the Nginx level
+    location /todoapp/ {
+        # CORS headers for ALL requests including OPTIONS
+        add_header Access-Control-Allow-Origin "*" always;
+        add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, HEAD" always;
+        add_header Access-Control-Allow-Headers "x-token, Content-Type, Authorization" always;
+        add_header Access-Control-Max-Age "86400" always;
+
+        # Handle OPTIONS preflight
+        if ($request_method = OPTIONS) {
+            add_header Access-Control-Allow-Origin "*" always;
+            add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, HEAD" always;
+            add_header Access-Control-Allow-Headers "x-token, Content-Type, Authorization" always;
+            add_header Content-Length 0;
+            add_header Content-Type text/plain;
+            return 204;
+        }
+
+        # Proxy to FastAPI
+        rewrite ^/todoapp/(.*) /$1 break;
+        proxy_pass http://localhost:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}

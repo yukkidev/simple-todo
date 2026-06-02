@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Hella Simple Todo</title>
+		<link rel="stylesheet" href="/styles.css">
+	</head>
+	<body>
+		<div id="neutralinoapp">
+
+			<!-- Header / Toolbar -->
+			<header class="header">
+
+				<button class="side-bar-btn" id="sidebarButton">[ > ]</button>
+ 
+				<h1>Hella Simple Todo</h1>
+				<div class="header-actions">
+					<button type="button" class="btn btn-secondary" id="syncBtn" title="Sync (Ctrl+S)">
+						Sync
+					</button>
+					<button type="button" class="btn btn-primary" id="addListBtn">
+						<span>+</span> Add List
+					</button>
+				</div>
+			</header>
+
+			<!-- Sections Sidebar -->
+			<aside class="sidebar" id="sidebar">
+				<div class="sidebar-header">
+					<span class="sidebar-title">Sections</span>
+					<button type="button" class="btn btn-icon" id="addSectionBtn" title="Add Section">+</button>
+				</div>
+				<div class="sections-list" id="sectionsList">
+					<!-- Sections will be dynamically added here -->
+				</div>
+			</aside>
+
+			<!-- Main layout with sidebar -->
+			<div class="main-layout">
+
+				<!-- Main content area -->
+				<div class="content">
+
+					<!-- Lists container -->
+					<div class="lists" id="listsContainer">
+						<!-- Lists will be dynamically added here -->
+					</div>
+
+				</div>
+
+			</div>
+
+			<!-- List template -->
+			<template id="listTemplate">
+				<div class="list" data-section="">
+					<div class="list-header">
+						<span class="drag-handle list-drag-handle" title="Drag to reorder">⋮⋮</span>
+						<input type="text" class="list-title" value="New List" placeholder="List name">
+						<select class="list-section-select" title="Move to section">
+							<option value="">No Section</option>
+						</select>
+						<div class="list-actions">
+							<button class="list-delete-btn" title="Delete list">×</button>
+						</div>
+					</div>
+					<div class="list-items">
+						<!-- List items will be added here -->
+					</div>
+				</div>
+			</template>
+
+			<!-- List item template -->
+			<template id="listItemTemplate">
+				<li class="list-item" draggable="true">
+					<button class="item-expand-btn" title="Expand/Collapse notes">
+						<span class="chevron">▶</span>
+					</button>
+					<input type="checkbox" class="item-checkbox">
+					<input type="text" class="item-text" placeholder="Enter task...">
+					<div class="item-actions">
+						<button class="item-action-btn" title="Delete item">×</button>
+					</div>
+					<div class="item-notes">
+						<textarea class="notes-textarea" placeholder="Add notes or steps for this task..."></textarea>
+					</div>
+				</li>
+			</template>
+
+			<!-- Context menu (for right-click actions on lists only) -->
+			<div class="context-menu" id="contextMenu">
+				<div class="context-menu-item" data-action="rename">
+					Rename
+				</div>
+				<div class="context-menu-separator"></div>
+				<div class="context-menu-item danger" data-action="delete">
+					Delete
+				</div>
+			</div>
+
+			<!-- Tab context menu -->
+			<div class="context-menu" id="tabContextMenu">
+				<div class="context-menu-item" data-action="renameTab">
+					Rename
+				</div>
+				<div class="context-menu-separator"></div>
+				<div class="context-menu-item danger" data-action="deleteTab">
+					Delete Tab
+				</div>
+			</div>
+
+		</div>
+
+		<script src="/js/neutralino.js"></script>
+		<script src="/js/config.js"></script>
+		<script src="/js/main.js"></script>
+		<script src="/js/listsHandler.js"></script>
+	</body>
+</html>
