@@ -1,5 +1,5 @@
 server {
-    server_name api.yukki.dev;
+    server_name api.example.com;
 
     location /api/yukki/ {
         proxy_pass http://127.0.0.1:5000;
